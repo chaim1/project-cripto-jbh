@@ -4,3 +4,24 @@
   padding: 0%;
   box-sizing: inherit;
 }
+#circle {
+  position: absolute;
+  top: 65%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 150px;
+  height: 150px;
+}
+.loader {
+  width: calc(100%);
+  height: calc(100%);
+  border: 8px solid #e3e4e6;
+  border-top: 8px solid #f4f9fc;
+  border-radius: 50%;
+  animation: rotate 5s linear infinite;
+}
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
