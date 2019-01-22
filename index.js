@@ -1,6 +1,6 @@
-// window.onload = function () {
-//     jQuery('#homeClick').click();
-// }
+window.onload = function () {
+    jQuery('#homeClick').click();
+}
 
 var coinArray = [];
 
