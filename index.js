@@ -98,21 +98,28 @@ if (width < 1100) {
 }
 
 
-function name(i) {
- var interval =   setInterval(() => {
-        i++
-        var temp = `<div class="progress">
-    <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="" aria-valuemin="0"
-        aria-valuemax="100" style="width:${ i }%">
-        ${ i }%
-    </div>
-    </div>`;
-    $('#test').html(temp);
-    console.log(precens);
-    if(i==100){
-        clearInterval(interval);
-    }
+
+
+
+
+
+
+
+// function name(i) {
+//  var interval =   setInterval(() => {
+//      i++
+//         var temp = `<div class="progress">
+//     <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="" aria-valuemin="0"
+//         aria-valuemax="100" style="width:${ i }%">
+//         ${ i }%
+//     </div>
+//     </div>`;
+//     $('#test').html(temp);
+//     console.log(i);
+//     if(i==100){
+//         clearInterval(interval);
+//     }
     
-    }, 10);
-} 
-name(0)
+//     }, 10);
+// } 
+// name(0)
