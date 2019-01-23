@@ -112,7 +112,7 @@ function morInfo(coinId, divId, simbol) {
                 localStorage.setItem(simbol, objItemCoin);
                 setInterval(() => {
                     localStorage.removeItem(simbol)
-                }, 120000);
+                }, 100000);
             });
     }
 }
