@@ -158,9 +158,11 @@ if (width < 1100) {
     $("#divMenu").addClass('container-fluid')
 }
 
-
-
-
+//live report
+//https://min-api.cryptocompare.com/data/pricemulti?fsyms=ETH,BTC&tsyms=USD
+ function addToReport(symbol){
+     alert(symbol);
+}
 
 
 
