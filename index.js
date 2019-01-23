@@ -127,6 +127,7 @@ function setMorData(coinId, divId, simbol,arrayData) {
 
 
 
+
 //css dynamic
 
 var width = window.innerWidth;
