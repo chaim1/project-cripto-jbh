@@ -3,6 +3,7 @@ window.onload = function () {
 }
 
 var coinArray = [];
+var htmlDataCoin = '';
 
 $('#mainNav>li>a').click(function (e) {
     $('#mainContent').empty();
@@ -12,14 +13,13 @@ $('#mainNav>li>a').click(function (e) {
     const href = $(this).attr('href');
     $.ajax(`templates/${href}.html`)
         .done(function (htmlData) {
+            htmlDataCoin = htmlData;
             getData(htmlData, link);
         });
 });
 
 const getData = (htmlData, link) => {
     if (coinArray.length == 0) {
-        console.log(1);
-
         $.ajax({
             url: link,
             method: 'GET',
@@ -30,7 +30,6 @@ const getData = (htmlData, link) => {
                 coinArray.push(d[i]);
             }
             setData(coinArray, htmlData)
-            console.log('coinArray');
         });
     } else {
         console.log(2);
@@ -41,7 +40,8 @@ const getData = (htmlData, link) => {
 
 var precens = 3;
 function setData(coinArray, htmlData) {
-    console.log(coinArray);
+    $('#mainContent').empty();
+    $('#circle').show();
     var p = 0;
     for (let i = 0; i < coinArray.length; i++) {
         p++
@@ -54,15 +54,76 @@ function setData(coinArray, htmlData) {
             $('#circle').hide();
         }
         var temp = htmlData;
-        temp = temp.replace('{simbol}', coinArray[i]['symbol']);
-        temp = temp.replace('{name}', coinArray[i]['name']);
+        temp = temp.replace(/{id}/g, coinArray[i]['id']);
+        temp = temp.replace(/{symbol}/g, coinArray[i]['symbol']);
+        temp = temp.replace(/{name}/g, coinArray[i]['name']);
         temp = temp.replace(/{collapse}/g, "cl" + coinArray[i]['id']);
         $('#mainContent').append(temp);
     }
 }
 
+//SearchClick
 
+$('#SearchClick').click(function () {
+    var search = $('#SearchInput').val();
+    if (search.length > 1) {
+        $('#mainContent').empty();
+        $('#circle').show();
+        var fun = (str) => {
+            return str.charAt(0).toLowerCase() + str.slice(1);
+        }
+        search = fun($('#SearchInput').val());
+        var coin = coinArray.filter(function (coin) { return coin.id == search }) ? coinArray.filter(function (coin) { return coin.id == search }).length > 0 : coin = coinArray;
 
+        if (coin == true) {
+            coin = coinArray.filter(function (coin) { return coin.id == search });
+        } else {
+            coin = coinArray;
+            alert("the requested currency is not found, make sure you enter a proper name");
+        }
+        $('#mainContent').empty();
+        $('#circle').show();
+        $('#SearchInput').val('');
+        setData(coin, htmlDataCoin)
+    } else {
+        alert("Insert a coin");
+    }
+    // coin.length > 0 ? setData(coin, htmlDataCoin) : alert("the requested currency is not found, make sure you enter a proper name");
+});
+
+//https://api.coingecko.com/api/v3/coins/bitcoin
+
+// TUDU enter simbol price 
+function morInfo(coinId, divId, simbol) {
+    let sroreg = localStorage.getItem(simbol);
+    if (sroreg) {        
+        sroreg = JSON.parse(sroreg);
+        setMorData(coinId, divId, simbol,sroreg);
+    } else {
+        $.ajax(`https://api.coingecko.com/api/v3/coins/${coinId}`)
+            .done(function (coindata) {
+                var objItemCoin = {};
+                objItemCoin.img = coindata['image']['large'];
+                objItemCoin.priceUsd = coindata['market_data']['current_price'].usd;
+                objItemCoin.priceEur = coindata['market_data']['current_price'].eur;
+                objItemCoin.priceIls = coindata['market_data']['current_price'].ils;
+                setMorData(coinId, divId, simbol,objItemCoin);
+                objItemCoin = JSON.stringify(objItemCoin);
+                localStorage.setItem(simbol, objItemCoin);
+                setInterval(() => {
+                    localStorage.removeItem(simbol)
+                }, 120000);
+            });
+    }
+}
+
+function setMorData(coinId, divId, simbol,arrayData) {
+    var tempMoreInfo = `<div class="card card-body">
+    <img  src="${arrayData.img}" alt=" ${coinId} image" height="55px" width="70px">
+    <p><strong>Price: </strong> <p>${simbol} ${arrayData.priceUsd}$ </p><p>${simbol} ${arrayData.priceEur}# </p><p>${simbol} ${arrayData.priceIls}@ </p></p>
+</div>`
+    document.getElementById(divId).innerHTML = tempMoreInfo;
+}
 
 
 
@@ -79,7 +140,6 @@ $window.scroll(function (e) {
     let lastPosition = window.scrollY;
 
     if ($window.scrollTop() > positionNav.top) {
-        console.log($window.scrollTop());
         $("#header-nav").addClass('fixed-top')
         $("#mainContent").css({ marginTop: heightNav })
     } else {
@@ -119,7 +179,7 @@ if (width < 1100) {
 //     if(i==100){
 //         clearInterval(interval);
 //     }
-    
+
 //     }, 10);
 // } 
 // name(0)
