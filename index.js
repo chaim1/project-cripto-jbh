@@ -58,6 +58,7 @@ function setData(coinArray, htmlData) {
         temp = temp.replace(/{symbol}/g, coinArray[i]['symbol']);
         temp = temp.replace(/{name}/g, coinArray[i]['name']);
         temp = temp.replace(/{collapse}/g, "cl" + coinArray[i]['id']);
+        temp = temp.replace('{buttonInfo}', 'More Info')
         $('#mainContent').append(temp);
     }
 }
@@ -95,6 +96,17 @@ $('#SearchClick').click(function () {
 
 // TUDU enter simbol price 
 function morInfo(coinId, divId, simbol) {
+
+    var buttonText = document.getElementById(divId).previousElementSibling;
+    if($(buttonText).hasClass('btn-info')){
+        $(buttonText).removeClass('btn-info')
+        $(buttonText).addClass('btn-success')
+    }else{
+        $(buttonText).removeClass('btn-success')
+        $(buttonText).addClass('btn-info')
+    }
+    buttonText.innerHTML = buttonText.innerHTML.includes('More Info')? 'Less Info' : 'More Info';
+    // buttonText.style.backgroundColor = buttonText.style.backgroundColor.includes("lightblue")? "blue" : "lightblue";
     let sroreg = localStorage.getItem(simbol);
     if (sroreg) {        
         sroreg = JSON.parse(sroreg);
@@ -160,10 +172,34 @@ if (width < 1100) {
 
 //live report
 //https://min-api.cryptocompare.com/data/pricemulti?fsyms=ETH,BTC&tsyms=USD
- function addToReport(symbol){
-     alert(symbol);
-}
+ function addToReport(idAndSymbol){
 
+   var a =  $(`#${idAndSymbol}`).prop("checked", true);
+//    console.log(a);
+// var b = `<div class="modal-content">
+// <div class="modal-header">
+//   <span class="close">&times;</span>
+//   <h2>Modal Header</h2>
+// </div>
+// <div class="modal-body">
+//   <p>Some text in the Modal Body</p>
+//   <p>Some other text...</p>
+// </div>
+// <div class="modal-footer">
+//   <h3>Modal Footer</h3>
+// </div>
+// </div>`;
+// $('#myModal').html(b);
+// var modal = document.getElementById('myModal');
+// var span = document.getElementsByClassName("close")[0];
+
+// modal.style.display = "block";
+
+// span.onclick = function() {
+//     modal.style.display = "none";
+//   }
+
+}
 
 
 
