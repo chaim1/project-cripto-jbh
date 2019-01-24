@@ -175,7 +175,7 @@ if (width < 1100) {
  function addToReport(idAndSymbol){
 
    var a =  $(`#${idAndSymbol}`).prop("checked", true);
-//    console.log(a);
+   console.log(a);
 // var b = `<div class="modal-content">
 // <div class="modal-header">
 //   <span class="close">&times;</span>
