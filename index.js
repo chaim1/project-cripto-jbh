@@ -94,7 +94,7 @@ $('#SearchClick').click(function () {
 
 //https://api.coingecko.com/api/v3/coins/bitcoin
 
-// TUDU enter simbol price 
+// TODO enter simbol price 
 function morInfo(coinId, divId, simbol) {
 
     var buttonText = document.getElementById(divId).previousElementSibling;
