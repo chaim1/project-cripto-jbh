@@ -176,28 +176,21 @@ if (width < 1100) {
 
    var a =  $(`#${idAndSymbol}`).prop("checked", true);
    console.log(a);
-// var b = `<div class="modal-content">
-// <div class="modal-header">
-//   <span class="close">&times;</span>
-//   <h2>Modal Header</h2>
-// </div>
-// <div class="modal-body">
-//   <p>Some text in the Modal Body</p>
-//   <p>Some other text...</p>
-// </div>
-// <div class="modal-footer">
-//   <h3>Modal Footer</h3>
-// </div>
-// </div>`;
-// $('#myModal').html(b);
-// var modal = document.getElementById('myModal');
-// var span = document.getElementsByClassName("close")[0];
+var b = `<div class="modal-content">
+<div class="modal-header">
+  <h2>Modal Header</h2>
+</div>
+<button id="closeWindowProp">Select</button>
+</div>`;
+$('#myModal').html(b);
+var modal = document.getElementById('myModal');
 
-// modal.style.display = "block";
+modal.style.display = "block";
+$('#closeWindowProp').click(function (e){
+    e.preventDefault();
+    modal.style.display = "none";
+});
 
-// span.onclick = function() {
-//     modal.style.display = "none";
-//   }
 
 }
 

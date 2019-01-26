@@ -99,19 +99,18 @@ function toggleDataSeries(e) {
 	chart.render();
 }
 
-var updateInterval = 200;
+var updateInterval = 2000;
 // initial value
 var yValue1 = 600; 
 var yValue2 = 605;
-var yValue3 = 610;
+var yValue3 = 620;
 
 
 var time = new Date;
-// starting at 9.30 am
-time.setHours(9);
-time.setMinutes(30);
-time.setSeconds(00);
-time.setMilliseconds(00);
+time.getHours();
+time.getMinutes();
+time.getSeconds();
+time.getMilliseconds();
 
 function updateChart(count) {
 	count = count || 1;
@@ -152,7 +151,7 @@ function updateChart(count) {
 	chart.render();
 }
 // generates first set of dataPoints 
-updateChart(100);	
+updateChart(0);	
 setInterval(function(){updateChart()}, updateInterval);
 
 }
