@@ -6,11 +6,12 @@ var coinArray = [];
 var htmlDataCoin = '';
 
 $('#homeClick').click(function (e) {
-    $('#chartContainer').addClass('d-none');
     coinsRegister = []
     $('#mainContent').removeClass('d-none');
     $('#mainContent').empty();
     $('#circle').show();
+    $('#chartContainer').removeClass('d-block');
+    $('#chartContainer').addClass('d-none');
     e.preventDefault();
     const link = $(this).attr('data-link');
     const href = $(this).attr('href');
