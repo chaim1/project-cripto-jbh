@@ -98,19 +98,19 @@ $('#SearchClick').click(function () {
 function morInfo(coinId, divId, simbol) {
 
     var buttonText = document.getElementById(divId).previousElementSibling;
-    if($(buttonText).hasClass('btn-info')){
+    if ($(buttonText).hasClass('btn-info')) {
         $(buttonText).removeClass('btn-info')
         $(buttonText).addClass('btn-success')
-    }else{
+    } else {
         $(buttonText).removeClass('btn-success')
         $(buttonText).addClass('btn-info')
     }
-    buttonText.innerHTML = buttonText.innerHTML.includes('More Info')? 'Less Info' : 'More Info';
+    buttonText.innerHTML = buttonText.innerHTML.includes('More Info') ? 'Less Info' : 'More Info';
     // buttonText.style.backgroundColor = buttonText.style.backgroundColor.includes("lightblue")? "blue" : "lightblue";
     let sroreg = localStorage.getItem(simbol);
-    if (sroreg) {        
+    if (sroreg) {
         sroreg = JSON.parse(sroreg);
-        setMorData(coinId, divId, simbol,sroreg);
+        setMorData(coinId, divId, simbol, sroreg);
     } else {
         $.ajax(`https://api.coingecko.com/api/v3/coins/${coinId}`)
             .done(function (coindata) {
@@ -119,7 +119,7 @@ function morInfo(coinId, divId, simbol) {
                 objItemCoin.priceUsd = coindata['market_data']['current_price'].usd;
                 objItemCoin.priceEur = coindata['market_data']['current_price'].eur;
                 objItemCoin.priceIls = coindata['market_data']['current_price'].ils;
-                setMorData(coinId, divId, simbol,objItemCoin);
+                setMorData(coinId, divId, simbol, objItemCoin);
                 objItemCoin = JSON.stringify(objItemCoin);
                 localStorage.setItem(simbol, objItemCoin);
                 setInterval(() => {
@@ -129,7 +129,7 @@ function morInfo(coinId, divId, simbol) {
     }
 }
 
-function setMorData(coinId, divId, simbol,arrayData) {
+function setMorData(coinId, divId, simbol, arrayData) {
     var tempMoreInfo = `<div class="card card-body">
     <img  src="${arrayData.img}" alt=" ${coinId} image" height="55px" width="70px">
     <p><strong>Price: </strong> <p>${simbol} ${arrayData.priceUsd}$ </p><p>${simbol} ${arrayData.priceEur}# </p><p>${simbol} ${arrayData.priceIls}@ </p></p>
@@ -164,37 +164,58 @@ $window.scroll(function (e) {
 
 
 if (width < 1100) {
-    $("#navBar").removeClass('container')
-    $("#navBar").addClass('container-fluid')
-    $("#divMenu").removeClass('container')
-    $("#divMenu").addClass('container-fluid')
+    $("#navBar").removeClass('container');
+    $("#navBar").addClass('container-fluid');
+    $("#divMenu").removeClass('container');
+    $("#divMenu").addClass('container-fluid');
 }
 
 //live report
 //https://min-api.cryptocompare.com/data/pricemulti?fsyms=ETH,BTC&tsyms=USD
- function addToReport(idAndSymbol){
+var coinRegister = [];
+function addToReport(idAndSymbol) {
+    var a = $(`#${idAndSymbol}`).prop("checked");
+    //    var a =  $(`#${idAndSymbol}`).prop("checked", true);
+    if (coinRegister.length == 5) {
+        var b = `<div class="modal-content">
+        <div class="modal-header">
+          <h2>Modal Header</h2>
+        </div>
+        <div id="coinUpdate"></div>
+        <button id="closeWindowProp">Select</button>
+        </div>`;
+        $('#myModal').html(b);
+        for(let i = 0; i < coinRegister.length; i++){
+           var temp =  `<label >${coinRegister[i]}
+                    <input id="${coinRegister[i]}" type="checkbox" onclick="updateCoin('${coinRegister[i]}')">
+            </label>`
+            $('#coinUpdate').append(temp);
+        }    
+    
+        var modal = document.getElementById('myModal');
+    
+        modal.style.display = "block";
+        $('#closeWindowProp').click(function (e) {
+            e.preventDefault();
+            modal.style.display = "none";
+        });    } else {
+        if (a) {
+            coinRegister.push(idAndSymbol);
+        } else {
+            for (let i = 0; i < coinRegister.length; i++) {
+                if (coinRegister[i] == idAndSymbol) {
+                    coinRegister.splice(i, 1);
+                }
+            }
 
-   var a =  $(`#${idAndSymbol}`).prop("checked", true);
-   console.log(a);
-var b = `<div class="modal-content">
-<div class="modal-header">
-  <h2>Modal Header</h2>
-</div>
-<button id="closeWindowProp">Select</button>
-</div>`;
-$('#myModal').html(b);
-var modal = document.getElementById('myModal');
-
-modal.style.display = "block";
-$('#closeWindowProp').click(function (e){
-    e.preventDefault();
-    modal.style.display = "none";
-});
-
-
+        }
+    }
+    console.log(coinRegister);
 }
 
-
+function updateCoin(id){
+    $(`#${id}`).prop("checked", false);
+}
 
 
 // function name(i) {

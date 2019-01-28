@@ -33,10 +33,11 @@
 <meta charset="UTF-8">	
 <script>
 window.onload = function () {
-
-var dataPoints1 = [];
-var dataPoints2 = [];
-var dataPoints3 = [];
+var points = {
+	 dataPoints1 = [],
+	 dataPoints2 = [],
+	 dataPoints3 = []
+}
 
 
 var chart = new CanvasJS.Chart("chartContainer", {
@@ -129,15 +130,15 @@ function updateChart(count) {
 
 
 	// pushing the new values
-	dataPoints1.push({
+	points.dataPoints1.push({
 		x: time.getTime(),
 		y: yValue1
 	});
-	dataPoints2.push({
+	points.dataPoints2.push({
 		x: time.getTime(),
 		y: yValue2
     });
-    dataPoints3.push({
+    points.dataPoints3.push({
 		x: time.getTime(),
 		y: yValue3
 	});

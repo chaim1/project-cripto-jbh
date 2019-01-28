@@ -9,13 +9,13 @@
   top: 65%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 150px;
-  height: 150px;
+  width: 100px;
+  height: 100px;
 }
 .loader {
   width: calc(100%);
   height: calc(100%);
-  border: 8px solid #e3e4e6;
+  border: 8px solid blue;
   border-top: 8px solid #f4f9fc;
   border-radius: 50%;
   animation: rotate 5s linear infinite;
