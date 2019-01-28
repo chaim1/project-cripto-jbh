@@ -3,13 +3,13 @@
         
         <div class="card-body">
                 <label class="switch float-right">
-                        <input id="{symbol}" type="checkbox" onclick="addToReport('{symbol}')">
+                        <input id="{symbol}" type="checkbox" onclick="addToReport('{symbol}','{collapse}')">
                         <span class="slider round"></span>
                     </label>
             <h5 class="simbol">{symbol}</h5>
             <p class="card-text">{name}</p>
             <button onclick="morInfo('{id}','{collapse}','{symbol}')" class="btn btn-info toggle" type="button" href="{collapse}"
-                data-toggle="collapse" data-target="#{collapse} " aria-expanded="false" aria-controls="collapseExample">
+                data-toggle="collapse" data-target='#{collapse}' aria-expanded="false" aria-controls="collapseExample">
                 {buttonInfo}
             </button>
             <div class="collapse" id="{collapse}"></div>

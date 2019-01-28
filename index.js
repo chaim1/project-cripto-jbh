@@ -140,36 +140,6 @@ function setMorData(coinId, divId, simbol, arrayData) {
 
 
 
-//css dynamic
-
-var width = window.innerWidth;
-var height = window.innerHeight;
-
-
-$window = $(window);
-var positionNav = $("#header-nav").offset();
-var heightNav = $("#header-nav").height();
-$window.scroll(function (e) {
-    let lastPosition = window.scrollY;
-
-    if ($window.scrollTop() > positionNav.top) {
-        $("#header-nav").addClass('fixed-top')
-        $("#mainContent").css({ marginTop: heightNav })
-    } else {
-        $("#header-nav").removeClass('fixed-top')
-        $("#mainContent").css({ marginTop: '0' })
-    }
-});
-
-
-
-if (width < 1100) {
-    $("#navBar").removeClass('container');
-    $("#navBar").addClass('container-fluid');
-    $("#divMenu").removeClass('container');
-    $("#divMenu").addClass('container-fluid');
-}
-
 //live report
 //https://min-api.cryptocompare.com/data/pricemulti?fsyms=ETH,BTC&tsyms=USD
 var coinsRegister = [];
@@ -230,7 +200,43 @@ function updateCoin(id){
 }
 
 
+
+
+
 // function name(i) {
+
+
+//css dynamic
+
+var width = window.innerWidth;
+var height = window.innerHeight;
+
+
+$window = $(window);
+var positionNav = $("#header-nav").offset();
+var heightNav = $("#header-nav").height();
+$window.scroll(function (e) {
+    let lastPosition = window.scrollY;
+
+    if ($window.scrollTop() > positionNav.top) {
+        $("#header-nav").addClass('fixed-top')
+        $("#mainContent").css({ marginTop: heightNav })
+    } else {
+        $("#header-nav").removeClass('fixed-top')
+        $("#mainContent").css({ marginTop: '0' })
+    }
+});
+
+
+
+if (width < 1100) {
+    $("#navBar").removeClass('container');
+    $("#navBar").addClass('container-fluid');
+    $("#divMenu").removeClass('container');
+    $("#divMenu").addClass('container-fluid');
+}
+
+
 //  var interval =   setInterval(() => {
 //      i++
 //         var temp = `<div class="progress">
