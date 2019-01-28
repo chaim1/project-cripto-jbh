@@ -172,22 +172,24 @@ if (width < 1100) {
 
 //live report
 //https://min-api.cryptocompare.com/data/pricemulti?fsyms=ETH,BTC&tsyms=USD
-var coinRegister = [];
+var coinsRegister = [];
 function addToReport(idAndSymbol) {
-    var a = $(`#${idAndSymbol}`).prop("checked");
+    var coinSelcted = $(`#${idAndSymbol}`).prop("checked");
     //    var a =  $(`#${idAndSymbol}`).prop("checked", true);
-    if (coinRegister.length == 5) {
+    if (coinsRegister.length == 5) {
+        $(`#${idAndSymbol}`).prop("checked", false);
+        var changeCoin = idAndSymbol;
         var b = `<div class="modal-content">
         <div class="modal-header">
           <h2>Modal Header</h2>
         </div>
         <div id="coinUpdate"></div>
-        <button id="closeWindowProp">Select</button>
+        <button data-coin="${changeCoin}" id="closeWindowProp">Cancel</button>
         </div>`;
         $('#myModal').html(b);
-        for(let i = 0; i < coinRegister.length; i++){
-           var temp =  `<label >${coinRegister[i]}
-                    <input id="${coinRegister[i]}" type="checkbox" onclick="updateCoin('${coinRegister[i]}')">
+        for(let i = 0; i < coinsRegister.length; i++){
+           var temp =  `<label >${coinsRegister[i]}
+                    <input id="${coinsRegister[i]}"  type="checkbox" onclick="updateCoin('${coinsRegister[i]}')">
             </label>`
             $('#coinUpdate').append(temp);
         }    
@@ -199,22 +201,32 @@ function addToReport(idAndSymbol) {
             e.preventDefault();
             modal.style.display = "none";
         });    } else {
-        if (a) {
-            coinRegister.push(idAndSymbol);
+        if (coinSelcted) {
+            coinsRegister.push(idAndSymbol);
         } else {
-            for (let i = 0; i < coinRegister.length; i++) {
-                if (coinRegister[i] == idAndSymbol) {
-                    coinRegister.splice(i, 1);
+            for (let i = 0; i < coinsRegister.length; i++) {
+                if (coinsRegister[i] == idAndSymbol) {
+                    coinsRegister.splice(i, 1);
                 }
             }
 
         }
     }
-    console.log(coinRegister);
+    console.log(coinsRegister);
 }
 
 function updateCoin(id){
     $(`#${id}`).prop("checked", false);
+    const coinChange = $('#closeWindowProp').attr('data-coin');
+    for (let i = 0; i < coinsRegister.length; i++) {
+        if (coinsRegister[i] == id) {
+            coinsRegister.splice(i, 1);
+            coinsRegister.push(coinChange);
+            $(`#${coinChange}`).prop("checked", true);
+            document.getElementById('myModal').style.display = "none";
+        }
+    }
+    console.log(coinsRegister);
 }
 
 
