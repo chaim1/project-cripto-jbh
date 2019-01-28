@@ -25,10 +25,10 @@
             <nav id="navBar" class="container navbar navbar-expand-lg navbar-light bg-light">
                 <ul id="mainNav" class="nav navbar-nav">
                     <li class="active nav-item active ">
-                        <a id="homeClick" class="nav-link float-left" href="home" data-link="demo.json">Home</a>
+                        <a id="homeClick" class="nav-link float-left" href="home" data-link="https://api.coingecko.com/api/v3/coins/list">Home</a>
                     </li>
                     <li class="nav-item active ">
-                        <a class="nav-link float-left" href="livePeports">Live Reports</a>
+                        <a id="ReportsClick" class="nav-link float-left">Live Reports</a>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link float-left" href="about">About</a>
@@ -62,7 +62,10 @@
     <div id="myModal" class="modal">
     </div>
 
+    <div id="chartContainer" class="d-none" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+
     <script src="index.js"></script>
+    <script src="canvasjs.min.js"></script>
 </body>
 
 </html>

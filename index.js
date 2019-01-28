@@ -5,7 +5,10 @@ window.onload = function () {
 var coinArray = [];
 var htmlDataCoin = '';
 
-$('#mainNav>li>a').click(function (e) {
+$('#homeClick').click(function (e) {
+    $('#chartContainer').addClass('d-none');
+    coinsRegister = []
+    $('#mainContent').removeClass('d-none');
     $('#mainContent').empty();
     $('#circle').show();
     e.preventDefault();
@@ -32,7 +35,6 @@ const getData = (htmlData, link) => {
             setData(coinArray, htmlData)
         });
     } else {
-        console.log(2);
         setData(coinArray, htmlData)
     }
 }
@@ -157,53 +159,201 @@ function addToReport(idAndSymbol) {
         <button data-coin="${changeCoin}" id="closeWindowProp">Cancel</button>
         </div>`;
         $('#myModal').html(b);
-        for(let i = 0; i < coinsRegister.length; i++){
-           var temp =  `<label >${coinsRegister[i]}
+        for (let i = 0; i < coinsRegister.length; i++) {
+            var temp = `<label >${coinsRegister[i]}
                     <input id="${coinsRegister[i]}"  type="checkbox" onclick="updateCoin('${coinsRegister[i]}')">
             </label>`
             $('#coinUpdate').append(temp);
-        }    
-    
+        }
+
         var modal = document.getElementById('myModal');
-    
+
         modal.style.display = "block";
         $('#closeWindowProp').click(function (e) {
             e.preventDefault();
             modal.style.display = "none";
-        });    } else {
+        });
+    } else {
         if (coinSelcted) {
-            coinsRegister.push(idAndSymbol);
+            coinsRegister.push(idAndSymbol.toUpperCase());
         } else {
             for (let i = 0; i < coinsRegister.length; i++) {
-                if (coinsRegister[i] == idAndSymbol) {
+                if (coinsRegister[i] == idAndSymbol.toUpperCase()) {
                     coinsRegister.splice(i, 1);
                 }
             }
-
         }
     }
-    console.log(coinsRegister);
 }
 
-function updateCoin(id){
-    $(`#${id}`).prop("checked", false);
+function updateCoin(id) {
+    $(`#${id.toLowerCase()}`).prop("checked", false);
     const coinChange = $('#closeWindowProp').attr('data-coin');
     for (let i = 0; i < coinsRegister.length; i++) {
         if (coinsRegister[i] == id) {
             coinsRegister.splice(i, 1);
-            coinsRegister.push(coinChange);
+            coinsRegister.push(coinChange.toUpperCase());
             $(`#${coinChange}`).prop("checked", true);
             document.getElementById('myModal').style.display = "none";
         }
     }
-    console.log(coinsRegister);
 }
 
+$('#ReportsClick').click(() => {
+    if (coinsRegister.length == 0) {
+        alert('Please select coins');
+    } else {
+        $('#mainContent').addClass('d-none');
+        $('#chartContainer').removeClass('d-none');
+        $('#chartContainer').addClass('d-block');
+
+        points = [
+            dataPoints1 = [],
+            dataPoints2 = [],
+            dataPoints3 = [],
+            dataPoints4 = [],
+            dataPoints5 = []
+        ]
+
+        var chart = new CanvasJS.Chart("chartContainer", {
+            zoomEnabled: true,
+            title: {
+                text: "Share Value of Two Companies"
+            },
+            axisX: {
+                title: "chart updates every 2 secs"
+            },
+            axisY: {
+                prefix: "$",
+                includeZero: false
+            },
+            toolTip: {
+                shared: true
+            },
+            legend: {
+                cursor: "pointer",
+                verticalAlign: "top",
+                fontSize: 13,
+                fontColor: "dimGrey",
+                itemclick: toggleDataSeries
+            },
+            data: []
+        });
+        for (let i = 0; i < coinsRegister.length; i++) {
+            chart['options']['data'].push({
+                type: "line",
+                xValueType: "dateTime",
+                yValueFormatString: "$####.0000",
+                showInLegend: true,
+                name: coinsRegister[i],
+                dataPoints: points[i]
+            })
+        }
+
+        function toggleDataSeries(e) {
+            if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                e.dataSeries.visible = false;
+            }
+            else {
+                e.dataSeries.visible = true;
+            }
+            chart.render();
+        }
+
+        var updateInterval = 2000;
+
+        // initial value
+
+        $.ajax(`https://min-api.cryptocompare.com/data/pricemulti?fsyms=${coinsRegister}&tsyms=USD`)
+            .done(function (d) {
+                setPrice(d)
+            });
+
+        function setPrice(d) {
+            var values = [
+                yValue1 = 0,
+                yValue2 = 0,
+                yValue3 = 0,
+                yValue4 = 0,
+                yValue5 = 0,]
+            for (let i = 0; i < coinsRegister.length; i++) {
+                if(d[`${coinsRegister[i]}`] !== undefined){
+                    var price = d[`${coinsRegister[i]}`]['USD'];
+                }else{
+                    var price = 0;
+                }
+                values[i] = price;
+            }
+        }
+
+        var time = new Date;
+        time.getHours();
+        time.getMinutes();
+        time.getSeconds();
+        time.getMilliseconds();
+        var yValues = [
+            yValue1 = 0,
+            yValue2 = 0,
+            yValue3 = 0,
+            yValue4 = 0,
+            yValue5 = 0,]
+        function updateChart(count) {
+            count = count || 1;
+            for (var i = 0; i < count; i++) {
+                time.setTime(time.getTime() + updateInterval);
+                $.ajax(`https://min-api.cryptocompare.com/data/pricemulti?fsyms=${coinsRegister}&tsyms=USD`)
+                    .done(function (d) {
+                        setYPrice(d)
+                    });
+                function setYPrice(d) {                    
+                    for (let i = 0; i < coinsRegister.length; i++) { 
+                         
+                        if(d[`${coinsRegister[i]}`] !== undefined){
+                            var price = d[`${coinsRegister[i]}`]['USD'];
+                        }else{
+                            var price = 0;
+                        }                      
+                        yValues[i] = price;                        
+                    }
+                    dataPoints1.push({
+                        x: time.getTime(),
+                        y:yValues[0]
+                    });
+                    dataPoints2.push({
+                        x: time.getTime(),
+                        y: yValues[1]
+                    }); 
+                    dataPoints3.push({
+                        x: time.getTime(),
+                        y: yValues[2]
+                    });
+                    dataPoints4.push({
+                        x: time.getTime(),
+                        y: yValues[3]
+                    })
+                    ;dataPoints5.push({
+                        x: time.getTime(),
+                        y: yValues[4]
+                    });
+                    for(let i = 0; i < coinsRegister.length; i++){
+                        chart.options.data[i].legendText = `${coinsRegister[i]} $` + yValues[i];
+                    }
+                    chart.render();
+                }
+            }
+        }
+        // generates first set of dataPoints 
+        updateChart(0);
+        setInterval(function () { updateChart() }, updateInterval);
+    }
+
+
+});
 
 
 
 
-// function name(i) {
+
 
 
 //css dynamic
@@ -236,21 +386,3 @@ if (width < 1100) {
     $("#divMenu").addClass('container-fluid');
 }
 
-
-//  var interval =   setInterval(() => {
-//      i++
-//         var temp = `<div class="progress">
-//     <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="" aria-valuemin="0"
-//         aria-valuemax="100" style="width:${ i }%">
-//         ${ i }%
-//     </div>
-//     </div>`;
-//     $('#test').html(temp);
-//     console.log(i);
-//     if(i==100){
-//         clearInterval(interval);
-//     }
-
-//     }, 10);
-// } 
-// name(0)

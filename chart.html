@@ -33,11 +33,13 @@
 <meta charset="UTF-8">	
 <script>
 window.onload = function () {
-var points = {
-	 dataPoints1 = [],
-	 dataPoints2 = [],
-	 dataPoints3 = []
-}
+
+	var dataPoints1 = [];
+	var dataPoints2 = [];
+	var dataPoints3 = [];
+	var dataPoints4 = [];
+	var dataPoints5 = [];
+
 
 
 var chart = new CanvasJS.Chart("chartContainer", {
@@ -62,15 +64,16 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		fontColor: "dimGrey",
 		itemclick : toggleDataSeries
 	},
-	data: [{ 
-		type: "line",
-		xValueType: "dateTime",
-		yValueFormatString: "$####.00",
-		xValueFormatString: "hh:mm:ss TT",
-		showInLegend: true,
-		name: "Company A",
-		dataPoints: dataPoints1
-		},
+	data: []
+});
+chart['options']['data'].push(	{				
+			type: "line",
+			xValueType: "dateTime",
+			yValueFormatString: "$####.00",
+			showInLegend: true,
+			name: "Company C" ,
+			dataPoints: dataPoints3
+	},
 		{				
 			type: "line",
 			xValueType: "dateTime",
@@ -78,16 +81,15 @@ var chart = new CanvasJS.Chart("chartContainer", {
 			showInLegend: true,
 			name: "Company B" ,
 			dataPoints: dataPoints2
-	},
-		{				
-			type: "line",
-			xValueType: "dateTime",
-			yValueFormatString: "$####.00",
-			showInLegend: true,
-			name: "Company C" ,
-			dataPoints: dataPoints3
-	}]
-});
+	},{ 
+		type: "line",
+		xValueType: "dateTime",
+		yValueFormatString: "$####.00",
+		xValueFormatString: "hh:mm:ss TT",
+		showInLegend: true,
+		name: "Company A",
+		dataPoints: dataPoints1
+		})
 console.log(chart['options']['data']);
 
 function toggleDataSeries(e) {
@@ -130,15 +132,15 @@ function updateChart(count) {
 
 
 	// pushing the new values
-	points.dataPoints1.push({
+	dataPoints1.push({
 		x: time.getTime(),
 		y: yValue1
 	});
-	points.dataPoints2.push({
+	dataPoints2.push({
 		x: time.getTime(),
 		y: yValue2
     });
-    points.dataPoints3.push({
+    dataPoints3.push({
 		x: time.getTime(),
 		y: yValue3
 	});
