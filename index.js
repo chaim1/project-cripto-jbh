@@ -219,7 +219,7 @@ $('#ReportsClick').click(() => {
         var chart = new CanvasJS.Chart("chartContainer", {
             zoomEnabled: true,
             title: {
-                text: "Share Value of Two Companies"
+                text: "Share Value of Coins"
             },
             axisX: {
                 title: "chart updates every 2 secs"
