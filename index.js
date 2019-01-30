@@ -352,7 +352,17 @@ $('#ReportsClick').click(() => {
 });
 
 
-
+$('#aboutClick').click(function (e) {
+    $('#mainContent').empty();
+    $('#circle').show();
+    e.preventDefault();
+    const href = $(this).attr('href');
+    $.ajax(`templates/${href}.html`)
+        .done(function (htmlData) {
+            $('#mainContent').html(htmlData);
+            $('#circle').hide();
+        });
+});
 
 
 
