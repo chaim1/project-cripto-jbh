@@ -152,9 +152,11 @@ function addToReport(idAndSymbol) {
     if (coinsRegister.length == 5) {
         $(`#${idAndSymbol}`).prop("checked", false);
         var changeCoin = idAndSymbol;
+        
         var b = `<div class="modal-content">
         <div class="modal-header">
-          <h2>Modal Header</h2>
+        <h5>You can choose up to five coins</h5>
+          <h2>Change Coin</h2>
         </div>
         <div id="coinUpdate"></div>
         <button data-coin="${changeCoin}" id="closeWindowProp">Cancel</button>
@@ -162,7 +164,7 @@ function addToReport(idAndSymbol) {
         $('#myModal').html(b);
         for (let i = 0; i < coinsRegister.length; i++) {
             var temp = `<label >${coinsRegister[i]}
-                    <input id="${coinsRegister[i]}"  type="checkbox" onclick="updateCoin('${coinsRegister[i]}')">
+                    <input class="checkbox-inline" id="${coinsRegister[i]}"  type="checkbox" onclick="updateCoin('${coinsRegister[i]}')">
             </label>`
             $('#coinUpdate').append(temp);
         }
