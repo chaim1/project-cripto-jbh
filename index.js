@@ -135,7 +135,7 @@ function morInfo(coinId, divId, simbol) {
 function setMorData(coinId, divId, simbol, arrayData) {
     var tempMoreInfo = `<div class="card card-body">
     <img  src="${arrayData.img}" alt=" ${coinId} image" height="55px" width="70px">
-    <p><strong>Price: </strong> <p>${simbol} ${arrayData.priceUsd}$ </p><p>${simbol} ${arrayData.priceEur}# </p><p>${simbol} ${arrayData.priceIls}@ </p></p>
+    <p><strong>Price: </strong> <p>${arrayData.priceUsd} $ </p><p>${arrayData.priceEur} &euro;</p><p>${arrayData.priceIls} &#8362; </p></p>
 </div>`
     document.getElementById(divId).innerHTML = tempMoreInfo;
 }
